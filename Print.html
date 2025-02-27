@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kai Yundu - Palm Reader</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a00, #ffcc00);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Darker Grotesque', sans-serif;
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #ff6f00;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        
+        .button:hover {
+            background: #ffa726;
+        }
+        
+        .live-feed {
+            width: 100%;
+            max-width: 450px;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.6);
+            margin-top: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+        
+        .feedback-container {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kai Yundu</h1>
+    <p>If you have problems, we will solve them.</p>
+    <button class="button" onclick="capturePalm()">Click Palm Image</button>
+    <div class="live-feed">Live Feed</div>
+    
+    <div class="feedback-container" id="feedbackContainer">
+        <h2>Your Palm Reading Results</h2>
+        <p id="feedbackText">Loading...</p>
+        <button class="button" onclick="redirectToThankYou()">Proceed to Payment</button>
+    </div>
+    
+    <script>
+        const database = {
+            "line1": "You have a strong life line, indicating good health and vitality.",
+            "line2": "Your heart line suggests deep emotions and strong relationships.",
+            "line3": "Your fate line shows an unpredictable but exciting journey ahead."
+        };
+        
+        function capturePalm() {
+            alert("Capturing Palm Image...");
+            setTimeout(fetchFeedback, 2000);
+        }
+        
+        function fetchFeedback() {
+            const lines = Object.keys(database);
+            const randomLine = lines[Math.floor(Math.random() * lines.length)];
+            document.getElementById('feedbackText').innerText = database[randomLine];
+            document.getElementById('feedbackContainer').style.display = 'block';
+        }
+        
+        function redirectToThankYou() {
+            window.location.href = 'thankyou.html';
+        }
+    </script>
+</body>
+</html>
+
+<!-- Thank You Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Kai Yundu</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a00, #ffcc00);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Darker Grotesque', sans-serif;
+            font-size: 40px;
+        }
+        .qr-container {
+            margin-top: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thank You for Using Kai Yundu</h1>
+    <p>We appreciate your support. If you’d like to make a contribution, please scan the QR code below.</p>
+    <div class="qr-container">
+        <img src="qr-code.png" alt="Payment QR Code" width="200">
+    </div>
+    <button class="button" onclick="printReceipt()">Print Receipt</button>
+    
+    <script>
+        function printReceipt() {
+            const receiptContent = `
+                <html>
+                <head><title>Receipt</title></head>
+                <body>
+                    <h2>Kai Yundu - Palm Reading Receipt</h2>
+                    <p>Thank you for using our service!</p>
+                    <p>Transaction ID: ${Math.floor(Math.random() * 100000)}</p>
+                    <p>Date: ${new Date().toLocaleString()}</p>
+                    <p>Amount Paid: $10</p>
+                    <p>Have a great day!</p>
+                </body>
+                </html>
+            `;
+            
+            let printWindow = window.open('', '', 'width=600,height=400');
+            printWindow.document.open();
+            printWindow.document.write(receiptContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+</body>
+</html>

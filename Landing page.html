@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kai Yundu - Palm Reader</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a00, #ffcc00);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Darker Grotesque', sans-serif;
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #ff6f00;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        
+        .button:hover {
+            background: #ffa726;
+        }
+        
+        .live-feed {
+            width: 100%;
+            max-width: 450px;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.6);
+            margin-top: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: translateY(0px); }
+            50% { opacity: 1; transform: translateY(-10px); }
+            100% { opacity: 0.2; transform: translateY(0px); }
+        }
+        
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        audio {
+            display: none;
+        }
+        
+        .feedback-container {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kai Yundu</h1>
+    <p>If you have problems, we will solve them.</p>
+    <button class="button" onclick="capturePalm()">Click Palm Image</button>
+    <div class="live-feed">Live Feed</div>
+    
+    <audio autoplay loop>
+        <source src="background-music.mp3" type="audio/mp3">
+    </audio>
+    
+    <div class="feedback-container" id="feedbackContainer">
+        <h2>Your Palm Reading Results</h2>
+        <p id="feedbackText">Loading...</p>
+    </div>
+    
+    <script>
+        function capturePalm() {
+            alert("Capturing Palm Image...");
+            setTimeout(fetchFeedback, 2000);
+        }
+        
+        function fetchFeedback() {
+            fetch("https://example.com/api/palm-feedback")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('feedbackText').innerText = data.feedback;
+                    document.getElementById('feedbackContainer').style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching feedback:', error));
+        }
+        
+        function createStars() {
+            const numStars = 50;
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement("div");
+                star.className = "star";
+                document.body.appendChild(star);
+                
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight;
+                let duration = Math.random() * 3 + 2;
+                
+                star.style.left = `${x}px`;
+                star.style.top = `${y}px`;
+                star.style.animationDuration = `${duration}s`;
+            }
+        }
+        
+        createStars();
+    </script>
+</body>
+</html>

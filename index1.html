@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kai Yunda - The Palm Reader</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #888;
+        }
+
+        #video {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+        }
+
+        #scanButton, #payButton, #payNow {
+            background-color: #ffcc00;
+            color: black;
+            font-size: 1.2rem;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        #scanButton:hover, #payButton:hover, #payNow:hover {
+            background-color: #ffaa00;
+        }
+
+        #problem, #solution, #paymentPage {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kai Yunda</h1>
+    <p id="quote">"Got a hand? Got a problem? This machine holds the answer."</p>
+
+    <video id="video" autoplay></video>
+    <br>
+    <button id="scanButton">Scan Your Palm</button>
+
+    <p id="problem"></p>
+    <button id="payButton" style="display: none;">Pay ₹199 to Solve Your Problems</button>
+
+    <div id="paymentPage" style="display: none;">
+        <h2>Payment Page</h2>
+        <p>Click below to complete your payment.</p>
+        <button id="payNow">Complete Payment</button>
+    </div>
+
+    <p id="solution"></p>
+
+    <script>
+        const video = document.getElementById("video");
+        const scanButton = document.getElementById("scanButton");
+        const problemText = document.getElementById("problem");
+        const payButton = document.getElementById("payButton");
+        const paymentPage = document.getElementById("paymentPage");
+        const payNow = document.getElementById("payNow");
+        const solutionText = document.getElementById("solution");
+
+        // Fake serious problems
+        const problems = [
+            "Your love line is weak. You might experience heartbreak in the next six months.",
+            "Your career line is broken. Job instability is on the horizon.",
+            "Your family line is short. Expect tension with relatives soon.",
+            "Your health line is fading. You may be feeling tired or stressed lately.",
+            "Your fate line is unclear. Life might feel directionless at the moment.",
+        ];
+
+        // Hilarious fake solutions
+        const solutions = [
+            "Love problem? Just start flirting with your fridge. Works every time.",
+            "Career crisis? Become a fortune teller. If this website can do it, so can you.",
+            "Family issues? Blame it on Mercury retrograde. They won’t question it.",
+            "Health worries? Eat an entire pizza alone. Science says it's self-care.",
+            "Feeling lost? Just walk in circles until you find yourself. It’s deep, trust me.",
+			"Serious Palmistry Problems.",
+			"A broken fate line – Unstable career, constant job changes.",
+			"A short life line – Low energy, weak health.",
+			"A forked heart line – Relationship instability, heartbreaks.",
+			"An island on the sun line – Public disgrace, bad reputation.
+			"A chained head line – Overthinking, mental stress.",
+			"No marriage line – Unlikely to get married.",
+			"A missing money line – Financial struggles.",
+			"A cross on the mount of Venus – Romantic struggles, toxic partners.",
+			"A wavy fate line – Life full of unpredictable ups and downs.",
+			"An extra horizontal line on the wrist – Chronic bad luck.",
+			"Hilariously Specific Solutions.",
+			"Toothpick – Carry it in your wallet to "piece your fate back together." Also useful for post-meal 					emergencies.",
+			"Dried chili pepper – Keep it in your pocket to "burn away" bad health vibes. Also, instant spice upgrade.",
+			"Rubber band – Wear it on your wrist and snap it whenever you fall for the wrong person. Condition  				your heart like Pavlov's dog.",
+			"Pack of glitter – Sprinkle it outside your house to "distract the universe" while it fixes your reputation. Bonus: Your yard sparkles forever.",
+			"Half-used candle – Light it when overthinking. Uneven burn? Your thoughts are still messy. Smooth burn? Your mind is cured.",
+			"Safety pin – Keep it with you. It "attracts commitment" and also keeps your clothes together if disaster strikes.",
+			"Single grain of rice – Place it in your purse. If it disappears, so does your money. If it stays, wealth follows. Guard it like a treasure.",
+			"Spoon – Stir drinks counterclockwise to remove negativity from your love life. If the spoon vanishes, your love life is permanently cursed.",
+			"Marble – Carry it around. When life feels unstable, roll it on a table. If it moves straight, your fate is back on track.",
+			"Paperclip – Hold it for ten seconds before making important decisions. It "resets destiny’s nonsense." Also, great for keeping random papers together.
+        ];
+
+        // Start fake camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Camera access denied:", err);
+            });
+
+        // Scan button click
+        scanButton.addEventListener("click", () => {
+            scanButton.innerText = "Scanning...";
+            setTimeout(() => {
+                scanButton.style.display = "none";
+                problemText.innerText = problems[Math.floor(Math.random() * problems.length)];
+                problemText.style.display = "block";
+                payButton.style.display = "inline-block";
+            }, 3000);
+        });
+
+        // Pay button click
+        payButton.addEventListener("click", () => {
+            problemText.style.display = "none";
+            payButton.style.display = "none";
+            paymentPage.style.display = "block";
+        });
+
+        // Complete payment button click
+        payNow.addEventListener("click", () => {
+            paymentPage.style.display = "none";
+            solutionText.innerText = solutions[Math.floor(Math.random() * solutions.length)];
+            solutionText.style.display = "block";
+        });
+    </script>
+
+</body>
+</html>
